@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for webinar.worldwidebizconsultantsinc.com (Production)
+name: CI/CD Pipeline for invest.worldwidebizconsultantsinc.com (Production)
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
 
 env:
   ORG_NAME: ${{ github.repository }}
-  BASE_URL: webinar.worldwidebizconsultantsinc.com
+  BASE_URL: invest.worldwidebizconsultantsinc.com
   APP_PORT: 4176
 # ======================================================
 # STAGE 1: BUILD
