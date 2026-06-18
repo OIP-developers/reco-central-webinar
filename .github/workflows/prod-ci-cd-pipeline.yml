@@ -9,7 +9,7 @@ on:
 
 env:
   ORG_NAME: ${{ github.repository }}
-  BASE_URL: worldwidebizconsultantsinc.com
+  BASE_URL: webinar.worldwidebizconsultantsinc.com
   APP_PORT: 4176
 # ======================================================
 # STAGE 1: BUILD
