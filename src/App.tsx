@@ -305,12 +305,6 @@ function App() {
             <div className="footer-logo">
               <img src="/Image-box/Main-Logo-2.png" alt="Logo" />
             </div>
-            <div className="footer-links">
-              <a href="#secrets">What You'll Learn</a>
-              <a href="#register">Register Free</a>
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms</a>
-            </div>
           </div>
           <div className="footer-bottom">
             <p>&copy; 2024 Reco Central. All rights reserved. | This webinar is for educational purposes only. Investment involves risk. Please consult a licensed financial advisor.</p>
