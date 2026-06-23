@@ -1,8 +1,56 @@
+import { useState } from 'react'
 import '../page-1.css'
 
 function App() {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
+  function showToast(message: string, type: 'success' | 'error') {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 4500)
+  }
+
+  async function handleSubmit(e: { preventDefault(): void }) {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, email, phone }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setFirstName('')
+        setLastName('')
+        setEmail('')
+        setPhone('')
+        showToast("You're registered! Check your email for webinar details.", 'success')
+      } else {
+        setError(data.message || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setError('Failed to send. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <>
+      {toast && (
+        <div className={`toast toast-${toast.type}`}>
+          <i className={`fa-solid ${toast.type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'}`}></i>
+          {toast.message}
+        </div>
+      )}
+
       {/* NAVBAR */}
       <nav className="navbar">
         <div className="container">
@@ -55,7 +103,7 @@ function App() {
                   </div>
                 </div>
                 <br />
-                <a href="#register" className="btn-gold" style={{ width: '100%', display: 'block', textAlign: 'center' }}>Register &amp; Win</a>
+                <a href="#register" className="btn-gold btn-gold--full">Register &amp; Win</a>
               </div>
             </div>
           </div>
@@ -267,7 +315,7 @@ function App() {
         </div>
       </section>
 
-      {/* REGISTER / GHL FORM */}
+      {/* REGISTER / FORM */}
       <section className="form-section" id="register">
         <div className="container">
           <div className="form-wrapper">
@@ -285,13 +333,42 @@ function App() {
             <div className="ghl-form-box">
               <h3>Claim Your <span className="gold-text">Free Spot</span></h3>
               <p className="form-tagline">Fill in your details — takes less than 60 seconds</p>
-              <div className="ghl-placeholder">
-                <input type="text" className="fake-input" placeholder="First Name" />
-                <input type="text" className="fake-input" placeholder="Last Name" />
-                <input type="email" className="fake-input" placeholder="Email Address" />
-                <input type="tel" className="fake-input" placeholder="Phone Number" />
-                <button className="btn-gold">Reserve My Free Seat &nbsp;<i className="fa-solid fa-arrow-right"></i></button>
-              </div>
+              <form onSubmit={handleSubmit}>
+                {error && <div className="form-error">{error}</div>}
+                <input
+                  type="text"
+                  className="fake-input"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  className="fake-input"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
+                />
+                <input
+                  type="email"
+                  className="fake-input"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+                <input
+                  type="tel"
+                  className="fake-input"
+                  placeholder="Phone Number"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  required
+                />
+                <button type="submit" className="btn-gold" disabled={loading}>
+                  {loading ? 'Registering…' : <>Reserve My Free Seat &nbsp;<i className="fa-solid fa-arrow-right"></i></>}
+                </button>
+              </form>
               <p className="form-note"><i className="fa-solid fa-lock"></i> Your information is 100% secure. We never share or sell your details.</p>
             </div>
           </div>
