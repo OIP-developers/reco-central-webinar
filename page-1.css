@@ -286,6 +286,8 @@ section { padding: 80px 0; }
         margin-bottom: 1.302vw; 
     }
     .ghl-placeholder .fake-input { padding: 0.677vw 0.781vw; font-size: 0.625vw; margin-bottom: 0.625vw; border-radius: 0.313vw; border: 0.052vw solid rgba(252,185,0,0.40); }
+    .ghl-form-box .fake-input { padding: 0.677vw 0.781vw; font-size: 0.625vw; margin-bottom: 0.625vw; border-radius: 0.313vw; border: 0.052vw solid rgba(252,185,0,0.40); }
+    .ghl-form-box .btn-gold { padding: 0.781vw; font-size: 0.833vw; margin-top: 0.260vw; }
     .form-note { font-size: 0.521vw; margin-top: 0.781vw; }
     .footer { padding: 2.083vw 0 1.302vw; }
     .footer-top { margin-bottom: 1.302vw; }
